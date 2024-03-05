@@ -1,5 +1,3 @@
-// import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -234,28 +232,28 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                 children: [
                   SansBold("Contact me", 35.0),
                   TextForm(
-                    ContainerWidth: widthDevice / 1.4,
+                    containerWidth: widthDevice / 1.4,
                     text: "First Name",
                     hintText: "Please type your first name",
                   ),
                   TextForm(
-                    ContainerWidth: widthDevice / 1.4,
+                    containerWidth: widthDevice / 1.4,
                     text: "Last Name",
                     hintText: "Please type your last name",
                   ),
                   TextForm(
-                    ContainerWidth: widthDevice / 1.4,
+                    containerWidth: widthDevice / 1.4,
                     text: "Email",
                     hintText: "Please type your Email",
                   ),
                   TextForm(
-                    ContainerWidth: widthDevice / 1.4,
+                    containerWidth: widthDevice / 1.4,
                     text: "Phone Number",
                     hintText: "Please type your phone number",
                   ),
                   TextForm(
                       text: "Message",
-                      ContainerWidth: widthDevice / 1.4,
+                      containerWidth: widthDevice / 1.4,
                       hintText: "Please type your message",
                       maxLines: 10),
                   MaterialButton(

@@ -124,14 +124,14 @@ class Sans extends StatelessWidget {
 
 class TextForm extends StatelessWidget {
   final text;
-  final ContainerWidth;
+  final containerWidth;
   final hintText;
   final maxLines;
 
   const TextForm(
       {Key? key,
       @required this.text,
-      @required this.ContainerWidth,
+      @required this.containerWidth,
       @required this.hintText,
       this.maxLines})
       : super(key: key);
@@ -144,7 +144,7 @@ class TextForm extends StatelessWidget {
         Sans(text, 16.0),
         SizedBox(height: 5.0),
         SizedBox(
-          width: ContainerWidth,
+          width: containerWidth,
           child: TextFormField(
             maxLines: maxLines == null ? null : maxLines,
             decoration: InputDecoration(

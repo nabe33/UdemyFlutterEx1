@@ -68,7 +68,7 @@ class _BlogMobileState extends State<BlogMobile> {
 
   @override
   Widget build(BuildContext context) {
-    var widthDevice = MediaQuery.of(context).size.width;
+    // var widthDevice = MediaQuery.of(context).size.width;
 
     return SafeArea(
       child: Scaffold(

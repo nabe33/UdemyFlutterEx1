@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'routes.dart';
-import 'web/landing_page_web.dart';
-import 'mobile/landing_page_mobile.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

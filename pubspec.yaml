@@ -39,6 +39,9 @@ dependencies:
   flutter_svg: ^2.0.10+1
   url_launcher: ^6.2.5
   url_strategy: ^0.2.0
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.14.0
+
 
 dev_dependencies:
   flutter_test:

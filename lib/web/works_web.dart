@@ -4,14 +4,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../components.dart';
 
-class ContactWeb extends StatefulWidget {
-  const ContactWeb({super.key});
+class WorksWeb extends StatefulWidget {
+  const WorksWeb({super.key});
 
   @override
-  State<ContactWeb> createState() => _ContactWebState();
+  State<WorksWeb> createState() => _WorksWebState();
 }
 
-class _ContactWebState extends State<ContactWeb> {
+class _WorksWebState extends State<WorksWeb> {
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
@@ -69,12 +69,12 @@ class _ContactWebState extends State<ContactWeb> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: 200.0,
+              expandedHeight: 400.0,
               backgroundColor: Colors.white,
               iconTheme: IconThemeData(size: 25.0, color: Colors.black),
               flexibleSpace: FlexibleSpaceBar(
                 background: Image.asset(
-                  "assets/contact_image.jpg",
+                  "assets/works.jpg",
                   fit: BoxFit.cover,
                   filterQuality: FilterQuality.high,
                 ),
@@ -112,73 +112,40 @@ class _ContactWebState extends State<ContactWeb> {
             ),
           ];
         },
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(height: 30.0),
-              SansBold("Contact Me", 40.0),
-              SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextForm(
-                        containerWidth: 350,
-                        text: "First Name",
-                        hintText: "Please type your first name",
+        body: ListView(
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 30.0),
+                SansBold("Works", 40.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    AnimatedCardWeb(
+                      imagePath: "assets/nabe_portfolio.png",
+                      height: 205.0,
+                      width: 300.0,
+                      text: "",
+                    ),
+                    SizedBox(
+                      width: widthDevice / 3,
+                      child: Column(
+                        children: [
+                          SansBold("Portfolio", 30.0),
+                          SizedBox(height: 15.0),
+                          Sans(
+                              "This is my portfolio website. I created this website using Flutter Web. I used the following packages: url_launcher, flutter_svg, and google_fonts.",
+                              15.0),
+                        ],
                       ),
-                      SizedBox(height: 15.0),
-                      TextForm(
-                        containerWidth: 350,
-                        text: "Email",
-                        hintText: "Please type your email address",
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextForm(
-                        containerWidth: 350,
-                        text: "Last Name",
-                        hintText: "Please type your last name",
-                      ),
-                      SizedBox(height: 15.0),
-                      TextForm(
-                        containerWidth: 350,
-                        text: "Phone Number",
-                        hintText: "Please type your phone number",
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.0),
-              TextForm(
-                  text: "Message",
-                  containerWidth: widthDevice / 1.5,
-                  hintText: "Please type your message",
-                  maxLines: 10),
-              SizedBox(height: 20.0),
-              MaterialButton(
-                  elevation: 20.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  height: 60.0,
-                  minWidth: 200.0,
-                  color: Colors.tealAccent,
-                  child: SansBold("Submit", 20.0),
-                  onPressed: () {}),
-              SizedBox(height: 10.0),
-            ],
-          ),
+                    ),
+                  ],
+                )
+              ],
+            )
+          ],
         ),
       ),
-      //
     );
   }
 }

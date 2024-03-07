@@ -122,6 +122,29 @@ class Sans extends StatelessWidget {
   }
 }
 
+class AbleCustom extends StatelessWidget {
+  final text;
+  final size;
+  final color;
+  final fontWeight;
+
+  const AbleCustom(
+      {super.key,
+      @required this.text,
+      @required this.size,
+      this.color,
+      this.fontWeight});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text,
+        style: GoogleFonts.abel(
+            fontSize: size,
+            color: color == null ? Colors.black : color,
+            fontWeight: fontWeight == null ? FontWeight.normal : fontWeight));
+  }
+}
+
 class TextForm extends StatelessWidget {
   final text;
   final containerWidth;

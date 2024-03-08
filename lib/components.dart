@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 
 class TabsWeb extends StatefulWidget {
   final title;
@@ -150,13 +152,17 @@ class TextForm extends StatelessWidget {
   final containerWidth;
   final hintText;
   final maxLines;
+  final controller;
+  final validator;
 
   const TextForm(
       {Key? key,
       @required this.text,
       @required this.containerWidth,
       @required this.hintText,
-      this.maxLines})
+      this.maxLines,
+      this.controller,
+      this.validator})
       : super(key: key);
 
   @override
@@ -169,8 +175,18 @@ class TextForm extends StatelessWidget {
         SizedBox(
           width: containerWidth,
           child: TextFormField(
+            validator: validator,
+            controller: controller,
             maxLines: maxLines == null ? null : maxLines,
             decoration: InputDecoration(
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.tealAccent,
@@ -259,4 +275,36 @@ class _AnimatedCardWebState extends State<AnimatedCardWeb>
       ),
     );
   }
+}
+
+class AddDataFirestore {
+  var logger = Logger();
+
+  CollectionReference response =
+      FirebaseFirestore.instance.collection('messages');
+  Future<void> addResponse(final firstName, final lastName, final email,
+      final phoneNumber, final message) async {
+    return response
+        .add({
+          'firstName': firstName,
+          'lastName': lastName,
+          'email': email,
+          'phoneNumber': phoneNumber,
+          'message': message,
+        })
+        .then((value) => logger.d("Success"))
+        .catchError((error) => logger.d("Failed to add user: $error"));
+  }
+}
+
+Future DialogError(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: SansBold("Thank you for your message!", 20.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+  );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../components.dart';
@@ -14,51 +15,32 @@ class BlogMobile extends StatefulWidget {
 }
 
 class _BlogMobileState extends State<BlogMobile> {
-  /*void article() async {
-    try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('articles').get();
-      querySnapshot.docs.forEach((element) {
-        Map<String, dynamic>? data = element.data() as Map<String, dynamic>?;
-        if (data != null && data.containsKey("title")) {
-          print(data["title"]);
-        }
-      });
-    } catch (e) {
-      print("エラーが発生しました: $e");
-    }
-  }
-
-  @override
-  void initState() {
-    print("initState");
-    super.initState();
-    article();
-  }*/
-
   // List title = ["Who is dash?", "Who is dash1?"];
   // List body = ["Google??", "Google it"];
 
-  void article() async {
-    await FirebaseFirestore.instance
-        .collection('articles')
-        .get()
-        .then((querySnapshot) => {
-              querySnapshot.docs.reversed.forEach((element) {
-                // print(element.data()["title"]);
-              })
-            });
-  }
+  // void article() async {
+  //   await FirebaseFirestore.instance
+  //       .collection('articles')
+  //       .get()
+  //       .then((querySnapshot) => {
+  //             querySnapshot.docs.reversed.forEach((element) {
+  //               // print(element.data()["title"]);
+  //             })
+  //           });
+  // }
 
-  void streamArticle() async {
-    await for (var snapshot
-        in FirebaseFirestore.instance.collection('articles').snapshots()) {
-      for (var title in snapshot.docs) {
-        print(title.data()['title']);
-      }
-    }
-  }
-
+  // void streamArticle() async {
+  //   var logger = Logger();
+  //   logger.d("Logger is working!");
+  //
+  //   await for (var snapshot
+  //       in FirebaseFirestore.instance.collection('articles').snapshots()) {
+  //     for (var title in snapshot.docs) {
+  //       logger.d(title.data()['title']);
+  //     }
+  //   }
+  // }
+  //
   // @override
   // void initState() {
   //   // article();

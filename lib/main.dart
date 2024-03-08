@@ -7,13 +7,14 @@ import 'firebase_options.dart';
 //import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); // Flutter framework初期化を確認
+  setPathUrlStrategy(); //?
 
+  // 以下はUdemy動画とは異なる今のFirebaseのやり方
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  setPathUrlStrategy(); //?
   runApp(const MyApp());
 }
 

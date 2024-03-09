@@ -324,15 +324,29 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                           onPressed: () async {
                             logger.d(_firstNameController.text);
                             final addData = new AddDataFirestore();
+                            // if (formKey.currentState!.validate()) {
+                            //   await addData.addResponse(
+                            //       _firstNameController.text,
+                            //       _lastNameController.text,
+                            //       _EmailController.text,
+                            //       _phoneController.text,
+                            //       _messageController.text);
+                            //   formKey.currentState!.reset();
+                            //   DialogError(context);
+                            // }
                             if (formKey.currentState!.validate()) {
-                              await addData.addResponse(
+                              if (await addData.addResponse(
                                   _firstNameController.text,
                                   _lastNameController.text,
                                   _EmailController.text,
                                   _phoneController.text,
-                                  _messageController.text);
-                              formKey.currentState!.reset();
-                              DialogError(context);
+                                  _messageController.text)) {
+                                formKey.currentState!.reset();
+                                DialogError(
+                                    context, "Message sent successfully");
+                              } else {
+                                DialogError(context, "Message failed to sent");
+                              }
                             }
                             ;
                           })

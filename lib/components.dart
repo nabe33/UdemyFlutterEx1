@@ -282,26 +282,29 @@ class AddDataFirestore {
 
   CollectionReference response =
       FirebaseFirestore.instance.collection('messages');
-  Future<void> addResponse(final firstName, final lastName, final email,
+  Future addResponse(final firstName, final lastName, final email,
       final phoneNumber, final message) async {
-    return response
-        .add({
-          'firstName': firstName,
-          'lastName': lastName,
-          'email': email,
-          'phoneNumber': phoneNumber,
-          'message': message,
-        })
-        .then((value) => logger.d("Success"))
-        .catchError((error) => logger.d("Failed to add user: $error"));
+    return response.add({
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'phoneNumber': phoneNumber,
+      'message': message,
+    }).then((value) {
+      logger.i("User added");
+      return true;
+    }).catchError((error) {
+      logger.e("Failed to add user: $error");
+      return false;
+    });
   }
 }
 
-Future DialogError(BuildContext context) {
+Future DialogError(BuildContext context, String title) {
   return showDialog(
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      title: SansBold("Thank you for your message!", 20.0),
+      title: SansBold(title, 20.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),

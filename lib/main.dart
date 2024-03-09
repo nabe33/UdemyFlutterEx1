@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'routes.dart';
 
@@ -9,6 +10,9 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Flutter framework初期化を確認
   setPathUrlStrategy(); //?
+
+  // GoogleFonts
+  GoogleFonts.config.allowRuntimeFetching = false;
 
   // 以下はUdemy動画とは異なる今のFirebaseのやり方
   await Firebase.initializeApp(

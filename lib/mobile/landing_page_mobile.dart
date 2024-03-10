@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:logger/logger.dart';
 import 'package:nabe33_portfolio/components.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LandingPageMobile extends StatefulWidget {
   const LandingPageMobile({super.key});
@@ -13,31 +9,8 @@ class LandingPageMobile extends StatefulWidget {
 }
 
 class _LandingPageMobileState extends State<LandingPageMobile> {
-  tealContainer(String text) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.tealAccent, style: BorderStyle.solid, width: 2.0),
-          borderRadius: BorderRadius.circular(5.0)),
-      padding: EdgeInsets.all(7.0),
-      child: Text(
-        text,
-        style: GoogleFonts.openSans(fontSize: 15.0),
-      ),
-    );
-  }
-
-  var logger = Logger();
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _EmailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _messageController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
-    var widthDevice = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -47,69 +20,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
           elevation: 0.0,
           iconTheme: IconThemeData(size: 35.0, color: Colors.black),
         ),
-        endDrawer: Drawer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DrawerHeader(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.black, width: 2.0),
-                  ),
-                  child: CircleAvatar(
-                    radius: 70.0,
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage('assets/nabe.png'),
-                  ),
-                ),
-              ),
-              TabsMobile(text: "Home", route: "/"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "Works", route: "/works"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "Blog", route: "/blog"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "About", route: "/about"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "Contact", route: "/contact"),
-              SizedBox(height: 40.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.instagram.com/wata7be3/")),
-                    icon: SvgPicture.asset(
-                      'assets/instagram.svg',
-                      color: Colors.black,
-                      width: 30.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.twitter.com/nabe33/")),
-                    icon: SvgPicture.asset(
-                      'assets/twitter.svg',
-                      color: Colors.black,
-                      width: 30.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.github.com/nabe33/")),
-                    icon: SvgPicture.asset(
-                      'assets/github.svg',
-                      color: Colors.black,
-                      width: 30.0,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        endDrawer: DrawerMobile(),
         body: ListView(
           children: [
             // Intro, 1st section
@@ -249,110 +160,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                 ),
                 SizedBox(height: 60.0),
                 // Contact, 4th section
-                Form(
-                  key: formKey,
-                  child: Wrap(
-                    runSpacing: 20.0,
-                    spacing: 20.0,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      SansBold("Contact me", 35.0),
-                      TextForm(
-                        containerWidth: widthDevice / 1.4,
-                        text: "First Name",
-                        hintText: "Please type your first name",
-                        controller: _firstNameController,
-                        validator: (text) {
-                          if (text.toString().isEmpty) {
-                            return "Please type your first name";
-                          }
-                        },
-                      ),
-                      TextForm(
-                        containerWidth: widthDevice / 1.4,
-                        text: "Last Name",
-                        hintText: "Please type your last name",
-                        controller: _lastNameController,
-                        validator: (text) {
-                          if (text.toString().isEmpty) {
-                            return "Please type your last name";
-                          }
-                        },
-                      ),
-                      TextForm(
-                        containerWidth: widthDevice / 1.4,
-                        text: "Email",
-                        hintText: "Please type your Email",
-                        controller: _EmailController,
-                        validator: (text) {
-                          if (text.toString().isEmpty) {
-                            return "Please type your zEmail";
-                          }
-                        },
-                      ),
-                      TextForm(
-                        containerWidth: widthDevice / 1.4,
-                        text: "Phone Number",
-                        hintText: "Please type your phone number",
-                        controller: _phoneController,
-                        // validator: (text) {
-                        //   if (text.toString().isEmpty) {
-                        //     return "Please type your phone number";
-                        //   }
-                        // },
-                      ),
-                      TextForm(
-                          text: "Message",
-                          containerWidth: widthDevice / 1.4,
-                          hintText: "Please type your message",
-                          controller: _messageController,
-                          validator: (text) {
-                            if (text.toString().isEmpty) {
-                              return "Please type your message";
-                            }
-                          },
-                          maxLines: 10),
-                      MaterialButton(
-                          elevation: 20.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          height: 60.0,
-                          minWidth: widthDevice / 2.2,
-                          color: Colors.tealAccent,
-                          child: SansBold("Submit", 20.0),
-                          onPressed: () async {
-                            logger.d(_firstNameController.text);
-                            final addData = new AddDataFirestore();
-                            // if (formKey.currentState!.validate()) {
-                            //   await addData.addResponse(
-                            //       _firstNameController.text,
-                            //       _lastNameController.text,
-                            //       _EmailController.text,
-                            //       _phoneController.text,
-                            //       _messageController.text);
-                            //   formKey.currentState!.reset();
-                            //   DialogError(context);
-                            // }
-                            if (formKey.currentState!.validate()) {
-                              if (await addData.addResponse(
-                                  _firstNameController.text,
-                                  _lastNameController.text,
-                                  _EmailController.text,
-                                  _phoneController.text,
-                                  _messageController.text)) {
-                                formKey.currentState!.reset();
-                                DialogError(
-                                    context, "Message sent successfully");
-                              } else {
-                                DialogError(context, "Message failed to sent");
-                              }
-                            }
-                            ;
-                          })
-                    ],
-                  ),
-                ),
+                ContactFormMobile(),
                 SizedBox(height: 20.0),
               ],
             )

@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../components.dart';
 
@@ -14,96 +11,20 @@ class AboutWeb extends StatefulWidget {
 }
 
 class _AboutWebState extends State<AboutWeb> {
-  urlLauncher(String imgPath, String url) {
-    return IconButton(
-      icon: SvgPicture.asset(imgPath, width: 35.0),
-      onPressed: () async {
-        await launchUrl(Uri.parse(url));
-      },
-    );
-  }
-
-  tealContainer(String text) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.tealAccent, style: BorderStyle.solid, width: 2.0),
-          borderRadius: BorderRadius.circular(5.0)),
-      padding: EdgeInsets.all(7.0),
-      child: Text(
-        text,
-        style: GoogleFonts.openSans(fontSize: 15.0),
-      ),
-    );
-  }
+  //
 
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      drawer: Drawer(
-          backgroundColor: Colors.white,
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            CircleAvatar(
-              radius: 72.0,
-              backgroundColor: Colors.tealAccent,
-              child: CircleAvatar(
-                radius: 70.0,
-                backgroundColor: Colors.white,
-                backgroundImage: AssetImage('assets/nabe.png'),
-              ),
-            ),
-            SizedBox(height: 15.0),
-            SansBold("Takayuki Watanabe", 30.0),
-            SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                urlLauncher("assets/instagram.svg",
-                    'https://www.instagram.com/wata7be3/'),
-                urlLauncher(
-                    "assets/twitter.svg", 'https://www.twitter.com/nabe33/'),
-                urlLauncher(
-                    "assets/github.svg", 'https://www.github.com/nabe33/'),
-              ],
-            ),
-          ])),
+      drawer: DrawerWeb(),
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
         iconTheme: IconThemeData(size: 25.0, color: Colors.black),
-        title: const Row(
-          children: [
-            Spacer(flex: 3),
-            TabsWeb(
-              title: "Home",
-              route: "/",
-            ),
-            Spacer(),
-            TabsWeb(
-              title: "Works",
-              route: "/works",
-            ),
-            Spacer(),
-            TabsWeb(
-              title: "Blog",
-              route: "/blog",
-            ),
-            Spacer(),
-            TabsWeb(
-              title: "About",
-              route: "/about",
-            ),
-            Spacer(),
-            TabsWeb(
-              title: "Contact",
-              route: "/contact",
-            ),
-            Spacer(),
-          ],
-        ),
+        title: TabsWebList(),
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20.0),

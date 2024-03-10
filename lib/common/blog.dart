@@ -1,142 +1,47 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../components.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class BlogMobile extends StatefulWidget {
-  const BlogMobile({super.key});
+class Blog extends StatefulWidget {
+  const Blog({super.key});
 
   @override
-  State<BlogMobile> createState() => _BlogMobileState();
+  State<Blog> createState() => _BlogState();
 }
 
-class _BlogMobileState extends State<BlogMobile> {
-  // List title = ["Who is dash?", "Who is dash1?"];
-  // List body = ["Google??", "Google it"];
-
-  // void article() async {
-  //   await FirebaseFirestore.instance
-  //       .collection('articles')
-  //       .get()
-  //       .then((querySnapshot) => {
-  //             querySnapshot.docs.reversed.forEach((element) {
-  //               // print(element.data()["title"]);
-  //             })
-  //           });
-  // }
-
-  // void streamArticle() async {
-  //   var logger = Logger();
-  //   logger.d("Logger is working!");
-  //
-  //   await for (var snapshot
-  //       in FirebaseFirestore.instance.collection('articles').snapshots()) {
-  //     for (var title in snapshot.docs) {
-  //       logger.d(title.data()['title']);
-  //     }
-  //   }
-  // }
-  //
-  // @override
-  // void initState() {
-  //   // article();
-  //   streamArticle();
-  //   super.initState();
-  // }
-
+class _BlogState extends State<Blog> {
   @override
   Widget build(BuildContext context) {
-    // var widthDevice = MediaQuery.of(context).size.width;
+    bool isWeb = MediaQuery.of(context).size.width > 800;
 
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.white,
-        endDrawer: Drawer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DrawerHeader(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.black, width: 2.0),
-                  ),
-                  child: CircleAvatar(
-                    radius: 70.0,
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage('assets/nabe.png'),
-                  ),
-                ),
-              ),
-              TabsMobile(text: "Home", route: "/"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "Works", route: "/works"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "Blog", route: "/blog"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "About", route: "/about"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "Contact", route: "/contact"),
-              SizedBox(height: 40.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.instagram.com/wata7be3/")),
-                    icon: SvgPicture.asset(
-                      'assets/instagram.svg',
-                      color: Colors.black,
-                      width: 30.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.twitter.com/nabe33/")),
-                    icon: SvgPicture.asset(
-                      'assets/twitter.svg',
-                      color: Colors.black,
-                      width: 30.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.github.com/nabe33/")),
-                    icon: SvgPicture.asset(
-                      'assets/github.svg',
-                      color: Colors.black,
-                      width: 30.0,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        endDrawer: DrawerMobile(),
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                expandedHeight: 400.0,
+                expandedHeight: isWeb ? 500.0 : 400.0,
                 backgroundColor: Colors.white,
                 iconTheme: IconThemeData(size: 35.0, color: Colors.black),
                 flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
+                  centerTitle: isWeb ? false : true,
                   title: Container(
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(3.0),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 4.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: isWeb ? 7.0 : 4.0),
                     child: AbleCustom(
                       text: "Welcome to my blog",
-                      size: 24.0,
+                      size: isWeb ? 30.0 : 24.0,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -168,6 +73,7 @@ class _BlogMobileState extends State<BlogMobile> {
                     return BlogPost(
                       title: documentSnapshot['title'],
                       body: documentSnapshot['body'],
+                      isWeb: isWeb,
                     );
                   },
                 );
@@ -187,8 +93,13 @@ class _BlogMobileState extends State<BlogMobile> {
 class BlogPost extends StatefulWidget {
   final title;
   final body;
+  final isWeb;
 
-  const BlogPost({super.key, @required this.title, @required this.body});
+  const BlogPost(
+      {super.key,
+      @required this.title,
+      @required this.body,
+      @required this.isWeb});
 
   @override
   State<BlogPost> createState() => _BlogPostState();
@@ -200,7 +111,9 @@ class _BlogPostState extends State<BlogPost> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
+      padding: widget.isWeb
+          ? EdgeInsets.only(left: 70.0, right: 70.0, top: 40.0)
+          : EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
       child: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(

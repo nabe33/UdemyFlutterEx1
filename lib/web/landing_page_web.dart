@@ -1,10 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:logger/logger.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../components.dart';
 
 class LandingPageWeb extends StatefulWidget {
@@ -15,91 +9,18 @@ class LandingPageWeb extends StatefulWidget {
 }
 
 class _LandingPageWebState extends State<LandingPageWeb> {
-  urlLauncher(String imgPath, String url) {
-    return IconButton(
-      icon: SvgPicture.asset(imgPath, width: 35.0),
-      onPressed: () async {
-        await launchUrl(Uri.parse(url));
-      },
-    );
-  }
-
-  var logger = Logger();
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _EmailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _messageController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
-    var widthDevice = MediaQuery.of(context).size.width;
-
+    var widthDevice = MediaQuery.of(context).size.width; // need it?
     return Scaffold(
-      drawer: Drawer(
-          backgroundColor: Colors.white,
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            CircleAvatar(
-              radius: 72.0,
-              backgroundColor: Colors.tealAccent,
-              child: CircleAvatar(
-                radius: 70.0,
-                backgroundColor: Colors.white,
-                backgroundImage: AssetImage('assets/nabe.png'),
-              ),
-            ),
-            SizedBox(height: 15.0),
-            SansBold("Takayuki Watanabe", 30.0),
-            SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                urlLauncher("assets/instagram.svg",
-                    'https://www.instagram.com/wata7be3/'),
-                urlLauncher(
-                    "assets/twitter.svg", 'https://www.twitter.com/nabe33/'),
-                urlLauncher(
-                    "assets/github.svg", 'https://www.github.com/nabe33/'),
-              ],
-            ),
-          ])),
+      drawer: DrawerWeb(),
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
         iconTheme: IconThemeData(size: 25.0, color: Colors.black),
-        title: const Row(
-          children: [
-            Spacer(flex: 3),
-            TabsWeb(
-              title: "Home",
-              route: "/",
-            ),
-            Spacer(),
-            TabsWeb(
-              title: "Works",
-              route: "/works",
-            ),
-            Spacer(),
-            TabsWeb(
-              title: "Blog",
-              route: "/blog",
-            ),
-            Spacer(),
-            TabsWeb(
-              title: "About",
-              route: "/about",
-            ),
-            Spacer(),
-            TabsWeb(
-              title: "Contact",
-              route: "/contact",
-            ),
-            Spacer(),
-          ],
-        ),
+        title: TabsWebList(),
       ),
       body: ListView(
         children: [
@@ -201,53 +122,13 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                     SizedBox(height: 10.0),
                     Row(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.tealAccent,
-                                style: BorderStyle.solid,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          padding: EdgeInsets.all(7.0),
-                          child: Sans("Flutter", 15),
-                        ),
+                        tealContainer("Flutter"),
                         SizedBox(width: 7.0),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.tealAccent,
-                                style: BorderStyle.solid,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          padding: EdgeInsets.all(7.0),
-                          child: Sans("UX design", 15),
-                        ),
+                        tealContainer("Firebase"),
                         SizedBox(width: 7.0),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.tealAccent,
-                                style: BorderStyle.solid,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          padding: EdgeInsets.all(7.0),
-                          child: Sans("Human-centered design", 15),
-                        ),
+                        tealContainer("Human-centered design"),
                         SizedBox(width: 7.0),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.tealAccent,
-                                style: BorderStyle.solid,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          padding: EdgeInsets.all(7.0),
-                          child: Sans("Web design", 15),
-                        ),
+                        tealContainer("Web design"),
                       ],
                     )
                   ],
@@ -283,110 +164,8 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                 ],
               )),
           // 4th section
-          Container(
-            height: heightDevice,
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SansBold("Contact Me", 40.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          TextForm(
-                            containerWidth: 350,
-                            text: "First Name",
-                            hintText: "Please type your first name",
-                            controller: _firstNameController,
-                            validator: (text) {
-                              if (text.toString().isEmpty) {
-                                return "Please type your first name";
-                              }
-                            },
-                          ),
-                          SizedBox(height: 15.0),
-                          TextForm(
-                            containerWidth: 350,
-                            text: "Email",
-                            hintText: "Please type your email address",
-                            controller: _EmailController,
-                            validator: (text) {
-                              if (text.toString().isEmpty) {
-                                return "Please type your Email address";
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          TextForm(
-                            containerWidth: 350,
-                            text: "Last Name",
-                            hintText: "Please type your last name",
-                            controller: _lastNameController,
-                            validator: (text) {
-                              if (text.toString().isEmpty) {
-                                return "Please type your last name";
-                              }
-                            },
-                          ),
-                          SizedBox(height: 15.0),
-                          TextForm(
-                            containerWidth: 350,
-                            text: "Phone Number",
-                            hintText: "Please type your phone number",
-                            controller: _phoneController,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  TextForm(
-                      text: "Message",
-                      containerWidth: widthDevice / 1.5,
-                      hintText: "Please type your message",
-                      controller: _messageController,
-                      validator: (text) {
-                        if (text.toString().isEmpty) {
-                          return "Please type your message";
-                        }
-                      },
-                      maxLines: 10),
-                  MaterialButton(
-                      elevation: 20.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      height: 60.0,
-                      minWidth: 200.0,
-                      color: Colors.tealAccent,
-                      child: SansBold("Submit", 20.0),
-                      onPressed: () async {
-                        logger.d(_firstNameController.text);
-                        final addData = new AddDataFirestore();
-                        if (formKey.currentState!.validate()) {
-                          if (await addData.addResponse(
-                              _firstNameController.text,
-                              _lastNameController.text,
-                              _EmailController.text,
-                              _phoneController.text,
-                              _messageController.text)) {
-                            formKey.currentState!.reset();
-                            DialogError(context, "Message sent successfully");
-                          } else {
-                            DialogError(context, "Message failed to sent");
-                          }
-                        }
-                        ;
-                      })
-                ],
-              ),
-            ),
-          ),
+          SizedBox(height: 15.0),
+          ContactFormWeb(),
           SizedBox(height: 20.0),
         ],
       ),

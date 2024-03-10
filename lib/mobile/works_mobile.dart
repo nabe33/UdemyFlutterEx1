@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nabe33_portfolio/components.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class WorksMobile extends StatefulWidget {
   const WorksMobile({super.key});
@@ -17,69 +15,7 @@ class _WorksMobileState extends State<WorksMobile> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.white,
-        endDrawer: Drawer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DrawerHeader(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.black, width: 2.0),
-                  ),
-                  child: CircleAvatar(
-                    radius: 70.0,
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage('assets/nabe.png'),
-                  ),
-                ),
-              ),
-              TabsMobile(text: "Home", route: "/"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "Works", route: "/works"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "Blog", route: "/blog"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "About", route: "/about"),
-              SizedBox(height: 20.0),
-              TabsMobile(text: "Contact", route: "/contact"),
-              SizedBox(height: 40.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.instagram.com/wata7be3/")),
-                    icon: SvgPicture.asset(
-                      'assets/instagram.svg',
-                      color: Colors.black,
-                      width: 30.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.twitter.com/nabe33/")),
-                    icon: SvgPicture.asset(
-                      'assets/twitter.svg',
-                      color: Colors.black,
-                      width: 30.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.github.com/nabe33/")),
-                    icon: SvgPicture.asset(
-                      'assets/github.svg',
-                      color: Colors.black,
-                      width: 30.0,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        endDrawer: DrawerMobile(),
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
